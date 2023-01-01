@@ -1,8 +1,7 @@
 import random
 import os
 from dataclasses import dataclass, field
-from datetime import datetime
-
+from typing import Final
 
 @dataclass
 class Grid:
@@ -20,7 +19,9 @@ class Grid:
                 self.grid[i].append(bool(random.getrandbits(1)))
 
     def print_grid(self) -> None:
-        print(" " + "＿" * (self.width + 1))
+        board_separator: Final[str] = " " + "＿" * (self.width + 1)
+
+        print(board_separator)
 
         for i in range(self.height):
             print("|", end=" ")
@@ -31,7 +32,7 @@ class Grid:
 
             print("|")
 
-        print(" " + "＿" * (self.width + 1))
+        print(board_separator)
 
 
 def clear_screen() -> None:
