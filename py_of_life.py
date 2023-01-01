@@ -1,6 +1,6 @@
 import random
 import os
-from dataclasses import dataclass, Field
+from dataclasses import dataclass, field
 from datetime import datetime
 
 
@@ -8,19 +8,19 @@ from datetime import datetime
 class Grid:
     height: int
     width: int
-    grid: list[list[bool]] = Field(default_factory=list)
+    grid: list[list[bool]] = field(default_factory=list)
 
     def init_random(self) -> None:
         assert self.height > 0 and self.width > 0
 
         self.grid = []
         for i in range(self.height):
-            self.grid[i] = []
+            self.grid.append([])
             for _ in range(self.width):
                 self.grid[i].append(bool(random.getrandbits(1)))
 
     def print_grid(self) -> None:
-        print("| " + ("_ " * self.width) + "|")
+        print(" " + "＿" * (self.width + 1))
 
         for i in range(self.height):
             print("|", end=" ")
@@ -31,7 +31,7 @@ class Grid:
 
             print("|")
 
-        print("| " + ("_ " * self.width) + "|")
+        print(" " + "＿" * (self.width + 1))
 
 
 def clear_screen() -> None:
