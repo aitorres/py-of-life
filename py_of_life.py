@@ -63,20 +63,22 @@ class Grid:
         self.grid = new_grid
 
     def print_grid(self) -> None:
-        board_separator: Final[str] = " " + "＿" * (self.width + 1)
+        board_separator: Final[str] = " " + "＿" * (self.width + 1) + "\n"
+        grid_str: str = ""
 
-        print(board_separator)
+        grid_str += board_separator
 
         for i in range(self.height):
-            print("|", end=" ")
+            grid_str += "| "
 
             for j in range(self.width):
                 cell = "*" if self.grid[i][j] else " "
-                print(cell, end=" ")
+                grid_str += cell + " "
 
-            print("|")
+            grid_str += "|\n"
 
-        print(board_separator)
+        grid_str += board_separator
+        sys.stdout.write(grid_str)
 
 
 def clear_screen() -> None:
@@ -109,7 +111,7 @@ def main() -> None:
     iters: int = args.iters
 
     if any(x <= 0 for x in [height, width, iters]):
-        print(
+        sys.stdout.write(
             "ERROR: Please enter positive (> 0) values for width, height and iterations!"
         )
         sys.exit(1)
@@ -121,7 +123,7 @@ def main() -> None:
         clear_screen()
         grid.print_grid()
         grid.compute_next_generation()
-        print(f"Generation {generation + 1} out of {iters}")
+        sys.stdout.write(f"Generation {generation + 1} out of {iters}\n")
         time.sleep(0.25)
 
 
