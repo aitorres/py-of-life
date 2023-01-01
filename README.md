@@ -2,11 +2,11 @@
 
 Python implementation of Conway's Game of Life using no dependency other than Python's standard library.
 
-Tested in Python 3.10.
+Tested against Python 3.9, 3.10 and 3.11.
 
 ## Installation
 
-No need to install anything else! If you've got Python 3.10+ on your system, then just clone the repo
+No need to install anything else! If you've got Python 3.9+ on your system, then just clone the repo
 (or copy the content of [py_of_life.py]([./py_of_life.py]) over to a local file).
 
 ## Usage
