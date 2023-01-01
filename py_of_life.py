@@ -1,5 +1,8 @@
+import argparse
 import random
 import os
+import sys
+import time
 from dataclasses import dataclass, field
 from typing import Final
 
@@ -89,7 +92,37 @@ def clear_screen() -> None:
 
 
 def main() -> None:
-    raise NotImplementedError()
+    parser = argparse.ArgumentParser(
+        prog="pyoflife",
+        description="A Python implementation of Conway's Game of Life."
+    )
+    parser.add_argument("height", type=int, help="Height of the grid")
+    parser.add_argument("width", type=int, help="Width of the grid")
+    parser.add_argument(
+        "iters", type=int, help="Amount of iterations / generations to play for"
+    )
+
+    args = parser.parse_args()
+
+    height: int = args.height
+    width: int = args.width
+    iters: int = args.iters
+
+    if any(x <= 0 for x in [height, width, iters]):
+        print(
+            "ERROR: Please enter positive (> 0) values for width, height and iterations!"
+        )
+        sys.exit(1)
+
+    grid = Grid(height, width)
+    grid.init_random()
+
+    for generation in range(iters):
+        clear_screen()
+        grid.print_grid()
+        grid.compute_next_generation()
+        print(f"Generation {generation + 1} out of {iters}")
+        time.sleep(0.25)
 
 
 if __name__ == "__main__":
