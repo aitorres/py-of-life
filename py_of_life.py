@@ -1,6 +1,6 @@
 import argparse
-import random
 import os
+import random
 import sys
 import time
 from dataclasses import dataclass, field
