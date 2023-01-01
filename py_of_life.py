@@ -18,6 +18,34 @@ class Grid:
             for _ in range(self.width):
                 self.grid[i].append(bool(random.getrandbits(1)))
 
+    def compute_next_generation(self) -> None:
+        new_grid: list[list[bool]] = []
+        displacement_matrix: list[list[int]] = set(
+            (i, j) for i in [-1, 0, 1] for j in [-1, 0, 1]
+        ) - {(0, 0)}
+
+        for i in range(self.height):
+            new_grid.append([])
+            for j in range(self.width):
+                cell = self.grid[i][j]
+                live_neighbors_count = sum(
+                    [
+                        int(self.grid[i + x][j + y])
+                        for (x, y) in displacement_matrix
+                        if 0 <= (i + x) < self.height
+                        and 0 <= (j + y) < self.width
+                    ]
+                )
+
+                if cell and live_neighbors_count in [2, 3]:
+                    new_grid[i].append(True)
+                elif not cell and live_neighbors_count == 3:
+                    new_grid[i].append(True)
+                else:
+                    new_grid[i].append(False)
+
+        self.grid = new_grid
+
     def print_grid(self) -> None:
         board_separator: Final[str] = " " + "＿" * (self.width + 1)
 
