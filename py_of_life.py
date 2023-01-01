@@ -29,6 +29,24 @@ class Grid:
     def validate_grid_position(self, i: int, j: int) -> bool:
         return 0 <= i < self.height and 0 <= j < self.width
 
+    def compute_cell_state(
+        self, current_state: bool, neighbors_count: int
+    ) -> bool:
+        # Any live cell with two or three live neighbours lives on
+        # to the next generation.
+        if current_state and neighbors_count in [2, 3]:
+            return True
+        # Any dead cell with exactly three live neighbours becomes a
+        # live cell, as if by reproduction.
+        elif not current_state and neighbors_count == 3:
+            return True
+        # Any live cell with fewer than two live neighbours dies,
+        # as if by underpopulation.
+        # Any live cell with more than three live neighbours dies,
+        # as if by overpopulation.
+        else:
+            return False
+
     def compute_next_generation(self) -> None:
         new_grid: list[list[bool]] = []
 
@@ -45,20 +63,9 @@ class Grid:
                     ]
                 )
 
-                # Any live cell with two or three live neighbours lives on
-                # to the next generation.
-                if cell and live_neighbors_count in [2, 3]:
-                    new_grid[i].append(True)
-                # Any dead cell with exactly three live neighbours becomes a
-                # live cell, as if by reproduction.
-                elif not cell and live_neighbors_count == 3:
-                    new_grid[i].append(True)
-                # Any live cell with fewer than two live neighbours dies,
-                # as if by underpopulation.
-                # Any live cell with more than three live neighbours dies,
-                # as if by overpopulation.
-                else:
-                    new_grid[i].append(False)
+                new_grid[i].append(
+                    self.compute_cell_state(cell, live_neighbors_count)
+                )
 
         self.grid = new_grid
 
