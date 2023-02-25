@@ -48,26 +48,18 @@ class Grid:
             return False
 
     def compute_next_generation(self) -> None:
-        new_grid: list[list[bool]] = []
+        live_neighbors_counts: list[list[int]] = [[0] * self.width for _ in range(self.height)]
 
         for i in range(self.height):
-            new_grid.append([])
-
             for j in range(self.width):
-                cell = self.grid[i][j]
-                live_neighbors_count = sum(
-                    [
-                        int(self.grid[i + x][j + y])
-                        for x, y in DISPLACEMENT_MATRIX
-                        if self.validate_grid_position(i + x, j + y)
-                    ]
-                )
+                if self.grid[i][j]:
+                    for x, y in DISPLACEMENT_MATRIX:
+                        if self.validate_grid_position(i + x, j + y):
+                            live_neighbors_counts[i + x][j + y] += 1
 
-                new_grid[i].append(
-                    self.compute_cell_state(cell, live_neighbors_count)
-                )
-
-        self.grid = new_grid
+        for i in range(self.height):
+            for j in range(self.width):
+                self.grid[i][j] = self.compute_cell_state(self.grid[i][j], live_neighbors_counts[i][j])
 
     def print_grid(self) -> None:
         board_separator: Final[str] = " " + "＿" * (self.width + 1) + "\n"
