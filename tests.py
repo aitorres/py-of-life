@@ -60,5 +60,91 @@ class TestPyOfLife(unittest.TestCase):
         ]:
             self.assertFalse(grid.validate_grid_position(i, j))
 
+    def test_compute_next_generation(self):
+        # General test
+        grid_1 = Grid(5, 5)
+        grid_1.grid = [
+            [False, True, False, False, False],
+            [False, True, True, False, False],
+            [True, False, False, True, False],
+            [True, True, False, False, False],
+            [True, False, False, False, True]
+        ]
+        grid_1.compute_next_generation()
+        self.assertEqual(
+            grid_1.grid,
+            [
+                [False, True, True, False, False],
+                [True, True, True, False, False],
+                [True, False, False, False, False],
+                [True, True, False, False, False],
+                [True, True, False, False, False]
+            ]
+        )
+
+        # Test: No spontaneous generation
+        grid_2 = Grid(3, 3)
+        grid_2.grid = [
+            [False, False, False],
+            [False, False, False],
+            [False, False, False]
+        ]
+        grid_2.compute_next_generation()
+        self.assertEqual(
+            grid_2.grid,
+            [
+                [False, False, False],
+                [False, False, False],
+                [False, False, False]
+            ]
+        )
+
+        # Test: Underpopulation
+        grid_3 = Grid(3, 3)
+        grid_3.grid = [
+            [False, False, True],
+            [False, False, False],
+            [False, False, True]
+        ]
+        grid_3.compute_next_generation()
+        self.assertEqual(
+            grid_3.grid,
+            [
+                [False, False, False],
+                [False, False, False],
+                [False, False, False]
+            ]
+        )
+
+        # Test: Overpopulation
+        grid_4 = Grid(2, 3)
+        grid_4.grid = [
+            [True, True, True],
+            [False, True, True],
+        ]
+        grid_4.compute_next_generation()
+        self.assertEqual(
+            grid_4.grid,
+            [
+                [True, False, True],
+                [True, False, True],
+            ]
+        )
+
+        # Test: reproduction
+        grid_5 = Grid(2, 3)
+        grid_5.grid = [
+            [True, False, True],
+            [False, True, False],
+        ]
+        grid_5.compute_next_generation()
+        self.assertEqual(
+            grid_5.grid,
+            [
+                [False, True, False],
+                [False, True, False],
+            ]
+        )
+
 if __name__ == '__main__':
     unittest.main()
