@@ -123,7 +123,7 @@ def main() -> None:
         grid.print_grid()
         grid.compute_next_generation()
         sys.stdout.write(f"Generation {generation + 1} out of {iters}\n")
-        time.sleep(0.25)
+        time.sleep(0.05)
 
 
 if __name__ == "__main__":

@@ -18,12 +18,12 @@ python py_of_life.py <HEIGHT> <WIDTH> <ITERS>
 The program needs three values to run, all of them integers greater than 0:
 
 - A height `N` an a width `M` in order to create an `NxM` grid
-- An amount of iterations / generations (4 generations will run per second)
+- An amount of iterations / generations (20 generations will run per second)
 
 For example:
 
 ```bash
-python py_of_life.py 10 25 50
+python py_of_life.py 10 25 100
 ```
 
 You also run `python py_of_life.py --help` to get these instructions printed to your CLI.
