@@ -2,7 +2,7 @@
 
 Python implementation of Conway's Game of Life using no dependency other than Python's standard library.
 
-Tested against Python 3.9, 3.10 and 3.11.
+Tested against Python 3.9 through 3.14.
 
 ## Installation
 
